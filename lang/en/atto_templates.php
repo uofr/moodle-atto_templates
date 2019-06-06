@@ -47,3 +47,6 @@ $string['templatestyle'] = 'Custom CSS (template {$a})';
 $string['templatestyle_desc'] = 'Enter any custom CSS that your template uses here. Template variables will not work here. Just plain old css.';
 
 $string['privacy:metadata'] = 'The atto_templates plugin does not store any personal data.';
+
+$string['templatesource'] = 'Template Source';
+$string['templatesource_desc'] = 'Click to use the same templates as the tinyMCE editor.';

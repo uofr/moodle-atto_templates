@@ -33,19 +33,30 @@ if (is_siteadmin()) {
     $ADMIN->add('editoratto', new admin_category('atto_templates', new lang_string('pluginname', 'atto_templates')));
 
     $settings = new admin_settingpage('atto_templates_settings', new lang_string('settings', 'atto_templates'));
+    $settings->add(new admin_setting_configcheckbox('atto_templates/templatesource',
+        get_string('templatesource', 'atto_templates'), 
+        get_string('templatesource_desc', 'atto_templates'),
+        0));
+      
+    if ($config && $config->templatesource == 0) {  
     $settings->add(new admin_setting_configtext('atto_templates/templatecount',
         get_string('templatecount', 'atto_templates'),
         get_string('templatecount_desc', 'atto_templates'),
         ATTO_TEMPLATES_TEMPLATE_COUNT, PARAM_INT, 20));
+    }
 
-
-    if ($config && property_exists($config, 'templatecount')) {
+    if ($config && property_exists($config, 'templatecount') && $config->templatesource == 1) {
+        $templatecount = 0;
+    }
+    elseif ($config && property_exists($config, 'templatecount')) {
         $templatecount = $config->templatecount;
-    } else {
+    }
+    else {
         $templatecount = ATTO_TEMPLATES_TEMPLATE_COUNT;
     }
 
-    for ($i = 1; $i <= $templatecount; $i++) {
+    if ($templatecount > 0) {
+      for ($i = 1; $i <= $templatecount; $i++) {
         if ($config && property_exists($config, 'templatekey_' . $i)) {
             $tname = $config->{'templatekey_' . $i};
             if (empty($tname)) {
@@ -68,5 +79,6 @@ if (is_siteadmin()) {
         $settings->add(new admin_setting_configtextarea('atto_templates/template_' . $i,
             get_string('template', 'atto_templates', $i),
             get_string('template_desc', 'atto_templates'), ''));
-    }
+        }
+    } 
 }

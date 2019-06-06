@@ -29,13 +29,16 @@ YUI.add('moodle-atto_templates-button', function (Y, NAME) {
         TEMPLATENAME: 'atto_templates_name',
         PREVIEW: 'atto_templates_preview',
         INSERT: 'atto_templates_insert',
-        CANCEL: 'atto_templates_cancel'
+        CANCEL: 'atto_templates_cancel',
+        DESCRIPTION: 'atto_templates_description',
+        LIST: 'templatelist'
     },
     SELECTORS = {
         TEMPLATES: '.' + CSS.TEMPLATENAME,
         INSERT: '.' + CSS.INSERT,
         PREVIEW: '.' + CSS.PREVIEW,
-        CANCEL: '.' + CSS.CANCEL
+        CANCEL: '.' + CSS.CANCEL,
+        DESCRIPTION: '.' + CSS.DESCRIPTION
     },
     TEMPLATES = {
         FORM: '' +
@@ -43,15 +46,17 @@ YUI.add('moodle-atto_templates-button', function (Y, NAME) {
                 '<div class="form-group">' +
                     '<label for="{{elementid}}_{{CSS.TEMPLATENAME}}">{{{get_string "selectatemplate" component}}}</label>' +
                     '<select class="{{CSS.TEMPLATENAME}} form-control" ' +
-                        'id="{{elementid}}_{{CSS.TEMPLATENAME}}" ' +
+                        'id="{{CSS.LIST}}" ' +
                         'name="{{elementid}}_{{CSS.TEMPLATENAME}}">' +
                         '<option value="">{{get_string "selectatemplate" component}}</option>' +
                         '{{#each templates}}' +
-                            '<option value="{{templatekey}}">{{templatekey}}</option>' +
+                            '<option value="{{templatekey}}">{{title}}</option>' +
                         '{{/each}}' +
                     '</select>' +
                 '</div>' +
-                '<label for="{{elementid}}_{{CSS.PREVIEW}}">{{get_string "preview" component}}</label>' +
+                '<div class="card-block {{CSS.DESCRIPTION}}" id="{{elementid}}_{{CSS.DESCRIPTION}}">' +
+                '<label for="{{elementid}}_{{CSS.PREVIEW}}" class="d-block">{{get_string "preview" component}}</label>' +
+                '<label id="{{CSS.DESCRIPTION}}" class="d-block"> {{description}}</label>' +
                 '<div class="card">' +
                     '<div class="card-block {{CSS.PREVIEW}}" id="{{elementid}}_{{CSS.PREVIEW}}">' +
                     '</div>' +
@@ -95,21 +100,44 @@ Y.namespace('M.atto_templates').Button = Y.Base.create('button', Y.M.editor_atto
             CSS: CSS
         }));
         this._content.one(SELECTORS.TEMPLATES).on('change', this._previewTemplate, this);
+        this._content.get(CSS.LIST).on('change', this._getDescription, this);
         this._content.one(SELECTORS.INSERT).on('click', this._insertTemplate, this);
         this._content.one(SELECTORS.CANCEL).on('click', this._cancel, this);
         return this._content;
     },
     _previewTemplate: function(e) {
-        var input,
-            value,
+        var value,
             previewWindow;
 
-        input = e.currentTarget;
-        value = input.get('value');
+        value = document.getElementById("templatelist").value;
+
         // Find the template.
         var template = this._templateFilter(value);
+        //if src exists, get file contents and overwrite template to use tinyMCE pulled one
+        if(template['src'] != "undefined"){
+         var xmlhttp = new XMLHttpRequest();
+         xmlhttp.onreadystatechange = function(){
+          if(xmlhttp.status == 200 && xmlhttp.readyState == 4){
+           template = xmlhttp.responseText;
+          }
+         };
+           xmlhttp.overrideMimeType && xmlhttp.overrideMimeType('text/plain');
+           xmlhttp.open("GET",template['src'],false);
+           xmlhttp.send(null);
+        }
         previewWindow = Y.one(SELECTORS.PREVIEW);
-        previewWindow.setHTML(template.template);
+        previewWindow.setHTML(template);
+    },
+    _getDescription: function() {
+        //this only works for the tinyMCE pulled templates as they have a description
+        var value,
+            label;
+
+     value = document.getElementById("templatelist").value;
+     // Find the template.
+     var template = this._templateFilter(value);
+     label = document.getElementById(CSS.DESCRIPTION);
+     label.innerHTML = "Description: " + template['description'];
     },
     _insertTemplate: function(e) {
         var input,
@@ -123,9 +151,15 @@ Y.namespace('M.atto_templates').Button = Y.Base.create('button', Y.M.editor_atto
             focusAfterHide: null
         }).hide();
 
+ 
+
         input = Y.one(SELECTORS.TEMPLATES); // Find the template dropdown.
         value = input.get('value');
         template = this._templateFilter(value);
+        if(template['src'] != "undefined") {
+            var previewWindow = Y.one(SELECTORS.PREVIEW);
+            template.template = previewWindow.getHTML();
+        }
         // Y.log(template);
         // Y.log(input);
         host.enableCssStyling();
@@ -141,12 +175,13 @@ Y.namespace('M.atto_templates').Button = Y.Base.create('button', Y.M.editor_atto
     _templateFilter: function(value) {
         for (var x = 0; x < this._templates.length; x++) {
             if (this._templates[x].templatekey == value) {
-                return this._templates[x];
+                 return this._templates[x];
             }
         }
-        return [];
+        return this._templates[value];
     }
-}, {
+},
+ {
     ATTRS: {
         templates: {
             value: {}

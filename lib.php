@@ -48,7 +48,11 @@ function atto_templates_strings_for_js() {
  * @return array List of templates
  */
 function atto_templates_params_for_js($elementid, $options, $fpoptions) {
+    global $CFG;
     $templates = get_config('atto_templates');
+    $tsource = $templates->templatesource;
+
+    if ($tsource == 0) {
     $tcount = ($templates->templatecount) ? $templates->templatecount : ATTO_TEMPLATES_TEMPLATE_COUNT;
     $items = [];
     for ($i = 1; $i <= $tcount; $i++) {
@@ -61,6 +65,43 @@ function atto_templates_params_for_js($elementid, $options, $fpoptions) {
             $items[] = $item;
         }
     }
+   }
+   else {
+       /*getting the config for tinyMCE since the templates are stored there
+       MCE template example
+       array[0] {
+          [title]=>"title string"
+          [SRC]=>"template file path string"
+          [description]=>"template description string"
+        }
+        */
+    $tconfig = get_config('editor_tinymce');
+    $tcount = 0;
+    //using TinyMCE code to grab their array just like they do
+    if (!empty($tconfig->customconfig)) {
+        $tconfig->customconfig = trim($tconfig->customconfig);
+        $decoded = json_decode($tconfig->customconfig, true);
+        if (is_array($decoded)) {
+            foreach ($decoded as $k=>$v) {
+                $params[$k] = $v;
+            }
+           //first array grabbed is a 3-dimensional array, only need templates_templates so reducing to 2 dimensional next
+           //$items is to keep inline with old code that plugin first used so other method isn't broken
+           foreach ($params[template_templates] as $j=>$w) {
+                $items[$j] = $w;
+                //need template key to be able to call individual templates
+                $items[$j]["templatekey"] = $tcount;
+                //need to convert src into a viable filepath
+                $items[$j]["src"] = $CFG->wwwroot . "/". $items[$j]["src"];
+                $tcount++;
+            }
+        }
+    }
+    //sending over the template count since this plugin uses it
+    //this method stored 61 templates when first used
+    $items["source"] = "tinymce";
+   }
+
     return array('templates' => $items);
 }
 

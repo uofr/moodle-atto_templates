@@ -29,13 +29,15 @@ YUI.add('moodle-atto_templates-button', function (Y, NAME) {
         TEMPLATENAME: 'atto_templates_name',
         PREVIEW: 'atto_templates_preview',
         INSERT: 'atto_templates_insert',
-        CANCEL: 'atto_templates_cancel'
+        CANCEL: 'atto_templates_cancel',
+        DESCRIPTION: 'atto_templates_description'
     },
     SELECTORS = {
         TEMPLATES: '.' + CSS.TEMPLATENAME,
         INSERT: '.' + CSS.INSERT,
         PREVIEW: '.' + CSS.PREVIEW,
-        CANCEL: '.' + CSS.CANCEL
+        CANCEL: '.' + CSS.CANCEL,
+        DESCRIPTION: '.' + CSS.DESCRIPTION
     },
     TEMPLATES = {
         FORM: '' +
@@ -52,6 +54,8 @@ YUI.add('moodle-atto_templates-button', function (Y, NAME) {
                     '</select>' +
                 '</div>' +
                 '<label for="{{elementid}}_{{CSS.PREVIEW}}">{{get_string "preview" component}}</label>' +
+                '<label for="{{elementid}}_{{CSS.DESCRIPTION}}">{{get_string "preview" component}}</label>' +
+                '<div class="card-block {{CSS.DESCRIPTION}}" id="{{elementid}}_{{CSS.DESCRIPTION}}">' +
                 '<div class="card">' +
                     '<div class="card-block {{CSS.PREVIEW}}" id="{{elementid}}_{{CSS.PREVIEW}}">' +
                     '</div>' +
@@ -88,6 +92,36 @@ Y.namespace('M.atto_templates').Button = Y.Base.create('button', Y.M.editor_atto
     _getDialogueContent: function() {
         var template = Y.Handlebars.compile(TEMPLATES.FORM);
         this._templates = this.get('templates');
+        
+        // if (this._templates['source']){
+        //     var template = Y.Handlebars.compile( 
+        //         '<form class="atto_form">' +
+        //         '<div class="form-group">' +
+        //             '<label for="{{elementid}}_{{CSS.TEMPLATENAME}}">{{{get_string "selectatemplate" component}}}</label>' +
+        //             '<select class="{{CSS.TEMPLATENAME}} form-control" ' +
+        //                 'id="{{elementid}}_{{CSS.TEMPLATENAME}}" ' +
+        //                 'name="{{elementid}}_{{CSS.TEMPLATENAME}}">' +
+        //                 '<option value="">{{get_string "selectatemplate" component}}</option>' +
+        //                 '{{#each templates}}' +
+        //                     '<option value="{{templatekey}}">{{name}}</option>' +
+        //                 '{{/each}}' +
+        //             '</select>' +
+        //         '</div>' +
+        //         '<label for="{{elementid}}_{{CSS.DESCRIPTION}}">{{get_string "preview" component}}</label>'  +
+        //         '<label for="{{elementid}}_{{CSS.PREVIEW}}">{{get_string "preview" component}}</label>' +
+        //                             '<div class="card-block {{CSS.DESCRIPTION}}" id="{{elementid}}_{{CSS.DESCRIPTION}}">' +
+        //         '<div class="card">' +
+        //             '<div class="card-block {{CSS.PREVIEW}}" id="{{elementid}}_{{CSS.PREVIEW}}">' +
+        //             '</div>' +
+        //         '</div>' +
+        //         '<div class="mdl-align">' +
+        //             '<button class="btn btn-primary {{CSS.INSERT}}">{{get_string "insert" component}}</button> ' +
+        //             '<button class="btn btn-secondary {{CSS.CANCEL}}">{{get_string "cancel" component}}</button>' +
+        //         '</div>' +
+        //     '</form>'
+        //     );
+        // }
+
         this._content = Y.Node.create(template({
             elementid: this.get('host').get('elementid'),
             component: COMPONENTNAME,
@@ -137,12 +171,21 @@ Y.namespace('M.atto_templates').Button = Y.Base.create('button', Y.M.editor_atto
         this.getDialogue().hide();
     },
     _templateFilter: function(value) {
-        for (var x = 0; x < this._templates.length; x++) {
-            if (this._templates[x].templatekey == value) {
-                return this._templates[x];
+        if (!(this._templates['source'])){
+            for (var x = 0; x < this._templates.length; x++) {
+                if (this._templates[x].templatekey == value) {
+                    return this._templates[x];
+                }
+    
+    
+                if (x == value) {
+                    return this._templates[x];
+                }
             }
-        }
-        return [];
+          }
+          else {
+            return this._templates[x];
+          }
     }
 }, {
     ATTRS: {
