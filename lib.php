@@ -37,6 +37,7 @@ function atto_templates_strings_for_js() {
          'insert',
          'cancel',
          'preview',
+         'selectacategory',
      ], 'atto_templates');
 }
 
@@ -85,24 +86,17 @@ function atto_templates_params_for_js($elementid, $options, $fpoptions) {
             foreach ($decoded as $k=>$v) {
                 $params[$k] = $v;
             }
-           //first array grabbed is a 3-dimensional array, only need templates_templates so reducing to 2 dimensional next
-           //$items is to keep inline with old code that plugin first used so other method isn't broken
-           foreach ($params[template_templates] as $j=>$w) {
-                $items[$j] = $w;
-                //need template key to be able to call individual templates
-                $items[$j]["templatekey"] = $tcount;
-                //need to convert src into a viable filepath
-                $items[$j]["src"] = $CFG->wwwroot . "/". $items[$j]["src"];
-                $tcount++;
-            }
+            
+        //first array grabbed is a 3-dimensional array, only need templates_templates so reducing to 2 dimensional next    
+         $values = atto_template_sort($params);
+         // $items is to keep inline with old code that plugin first used so other method isn't broken
         }
     }
     //sending over the template count since this plugin uses it
     //this method stored 61 templates when first used
-    $items["source"] = "tinymce";
+    $values['items']["source"] = "tinymce";
    }
-
-    return array('templates' => $items);
+    return array('templates' => $values['items'], 'categories' => $values['categories']);
 }
 
 /**
@@ -112,4 +106,50 @@ function atto_templates_get_fontawesome_icon_map() {
     return [
         'atto_templates:icon' => 'fa-wpforms'
     ];
+}
+
+
+//sorting 3 dimensional array into multiple 3 dimensional arrays based on type
+function atto_template_sort(& $params) {
+    global $CFG;
+    $count = 0;
+    $categories = [];
+    $types = [];
+    
+    foreach ($params[template_templates] as $j=>$w) {
+        
+        $items[$j] = $w;
+        //search the name string for identifying type
+        $str = $items[$j]["title"];
+        $catkey = strtolower(substr($str, 0, strpos($str, ' ')));
+        $items[$j]["templatekey"] = $catkey . $count;
+        $count++;
+
+
+
+       if (!isset($types[$catkey])){
+        $types[$catkey] = array();
+        $types[$catkey]['name'] = ucfirst($catkey);
+        $types[$catkey]['key'] = $catkey;
+
+        $categories[] = $types[$catkey];
+       }
+
+
+
+        //need to convert src into a viable filepath
+        $items[$j]["src"] = $CFG->wwwroot . "/". $items[$j]["src"];
+
+    }
+
+    usort($categories, "cmp");
+    $values = array();
+    $values['items'] = $items;
+    $values['categories'] = $categories;
+ return $values;
+}
+
+function cmp($a, $b)
+{
+    return strcmp($a["name"], $b["name"]);
 }
