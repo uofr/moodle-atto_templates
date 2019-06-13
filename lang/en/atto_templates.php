@@ -29,7 +29,7 @@ $string['settings'] = 'Template settings';
 
 $string['dialogtitle'] = 'Insert predefined template content';
 $string['template'] = 'Template';
-$string['selectatemplate'] = 'Select a template...test';
+$string['selectatemplate'] = 'Select a template...';
 $string['description'] = 'Select a template, to preview what it\'ll look like, then click Insert';
 $string['insert'] = 'Insert';
 $string['cancel'] = 'Cancel';
@@ -51,4 +51,4 @@ $string['privacy:metadata'] = 'The atto_templates plugin does not store any pers
 $string['templatesource'] = 'Template Source';
 $string['templatesource_desc'] = 'Click to use the same templates as the tinyMCE editor.';
 
-$string['selectacategory'] = 'Choose your template type.';
+$string['selectacategory'] = 'Select a category...';

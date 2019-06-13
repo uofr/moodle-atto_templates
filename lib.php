@@ -130,6 +130,18 @@ function atto_template_sort(& $params) {
        if (!isset($types[$catkey])){
         $types[$catkey] = array();
         $types[$catkey]['name'] = ucfirst($catkey);
+        if ($types[$catkey]['name'] == 'Pull') {
+            $types[$catkey]['name'] = $types[$catkey]['name'] . " Quotes";
+        }
+        else if ($types[$catkey]['name'] == 'Drop') {
+            $types[$catkey]['name'] = $types[$catkey]['name'] . "down Blocks";
+        }
+        else if ($types[$catkey]['name'] == 'Callout' || $types[$catkey]['name'] == 'Card') {
+            $types[$catkey]['name'] = $types[$catkey]['name'] . " Blocks";
+        }
+  
+    
+
         $types[$catkey]['key'] = $catkey;
 
         $categories[] = $types[$catkey];
