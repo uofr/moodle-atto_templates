@@ -1,0 +1,125 @@
+#frmbody {
+	padding: 10px;
+	background-color: #FFF;
+	border: 1px solid #CCC;
+}
+
+.frmRow {
+	margin-bottom: 10px;
+}
+
+#templatesrc {
+	border: none;
+	width: 320px;
+	height: 240px;
+}
+
+.title {
+	padding-bottom: 5px;
+}
+
+.mceActionPanel {
+	padding-top: 5px;
+}
+
+#tpath .tab-pane {
+	height: 430px;
+	overflow: auto;
+}
+
+#tpath .tab-pane li {
+	display: inline-grid;
+	width: 30%;
+	padding-top: 1.5em;
+	list-style: none;
+	cursor: pointer;
+}
+
+#tpath p {
+	margin: 0;
+	padding-top: 4px;
+    text-align: center;
+}
+
+#tpath .icon {
+	height: 32px;
+    width: 32px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#tpath .image-item .icon {
+    width: 48px;
+}
+
+#preview {
+	margin-top: .5em;
+}
+
+
+.Left i::before {
+	transform: rotatey(180deg);
+}
+
+#tpath li i::before {
+	display: inline-block;
+	font-style: normal;
+	font-variant: normal;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	font-size: 3em;
+}
+
+#tpath li i {
+	margin-right: auto;
+	margin-left: auto;
+}
+
+
+#tpath .callout-item.Blank i::before {
+	font-weight: lighter;
+	height: 32px;
+	margin-bottom: 4px;
+}
+
+
+
+.Info i::before {
+	color: #5bc0de;
+}
+
+.Success i::before{
+	color: #5cb85c;
+}
+
+.Danger i::before{
+	color: #d9534f;
+}
+
+.Light i::before{
+	color: #eceff1;
+}
+
+.Dark i::before{
+	color: #373a3c;
+}
+
+.purple i::before{
+	color: #eddef8;
+}
+
+.Warning i::before{
+	color: #f0ad4e;
+}
+
+.yellow i::before{
+	color: #fdffd8;
+}
+
+.Primary i::before {
+	color: #848889;
+}
+
+.Secondary i::before {
+	color: #ced4da;
+}

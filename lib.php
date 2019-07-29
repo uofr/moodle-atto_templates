@@ -104,7 +104,8 @@ function atto_templates_params_for_js($elementid, $options, $fpoptions) {
  */
 function atto_templates_get_fontawesome_icon_map() {
     return [
-        'atto_templates:icon' => 'fa-wpforms'
+        'atto_templates:icon' => 'fa-wpforms',
+        'atto_templates:test' => 'fa-dragon'
     ];
 }
 
@@ -151,6 +152,9 @@ function atto_template_sort(& $params) {
 
         //need to convert src into a viable filepath
         $items[$j]["src"] = $CFG->wwwroot . "/". $items[$j]["src"];
+        if($items[$j]["icon"]) {
+            $items[$j]["icon"] = $CFG->wwwroot . "/". $items[$j]["icon"];
+        }
 
     }
 
