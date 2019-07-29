@@ -22,7 +22,7 @@
 	padding-top: 5px;
 }
 
-#tpath .tab-pane {
+#tpath {
 	height: 430px;
 	overflow: auto;
 }
