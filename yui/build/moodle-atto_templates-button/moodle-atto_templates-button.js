@@ -307,7 +307,7 @@ YUI.add('moodle-atto_templates-button', function (Y, NAME) {
             else if (key.startsWith("callout")) {
                 icon.setAttribute('class','fa fa-square-o');
             }
-            else if (key.startsWith("pull")){
+            else if (key.startsWith("quote")){
                 icon.setAttribute('class','fa fa-quote-right');
             }
             else if (key.startsWith("card")){

@@ -48,8 +48,12 @@
 	margin-left: auto;
 }
 
-#tpath .image-item .icon {
-    width: 48px;
+#tpath .image-item .icon, #tpath .quote-item .icon {
+    width: auto;
+}
+
+#tpath .quote-item p {
+	padding-top: 3px;
 }
 
 #preview {
@@ -68,6 +72,8 @@
 	text-rendering: auto;
 	-webkit-font-smoothing: antialiased;
 	font-size: 3em;
+	margin-bottom: 5px;
+	height: 32px;
 }
 
 #tpath li i {
