@@ -117,7 +117,7 @@ function atto_template_sort(& $params) {
     $categories = [];
     $types = [];
     
-    foreach ($params[template_templates] as $j=>$w) {
+    foreach ($params['template_templates'] as $j=>$w) {
         
         $items[$j] = $w;
         //search the name string for identifying type
@@ -152,7 +152,7 @@ function atto_template_sort(& $params) {
 
         //need to convert src into a viable filepath
         $items[$j]["src"] = $CFG->wwwroot . "/". $items[$j]["src"];
-        if($items[$j]["icon"]) {
+        if(isset($items[$j]["icon"])) {
             $items[$j]["icon"] = $CFG->wwwroot . "/". $items[$j]["icon"];
         }
 
