@@ -37,7 +37,11 @@ if (is_siteadmin()) {
         get_string('templatesource', 'atto_templates'), 
         get_string('templatesource_desc', 'atto_templates'),
         0));
-      
+    
+	if (!isset($config->templatesource)) {
+		$config->templatesource = 0;
+	}
+	  
     if ($config && $config->templatesource == 0) {  
     $settings->add(new admin_setting_configtext('atto_templates/templatecount',
         get_string('templatecount', 'atto_templates'),
