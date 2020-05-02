@@ -135,13 +135,13 @@ function atto_template_sort(& $params) {
             $types[$catkey]['name'] = $types[$catkey]['name'] . " Quotes";
         }
         else if ($types[$catkey]['name'] == 'Drop') {
-            $types[$catkey]['name'] = $types[$catkey]['name'] . "down Blocks";
+            $types[$catkey]['name'] = $types[$catkey]['name'] . "downs";
         }
         else if ($types[$catkey]['name'] == 'Callout' || $types[$catkey]['name'] == 'Card') {
-            $types[$catkey]['name'] = $types[$catkey]['name'] . " Blocks";
+            $types[$catkey]['name'] = $types[$catkey]['name'] . "s";
+        } else {
+        	$types[$catkey]['name'] .= "s";
         }
-  
-    
 
         $types[$catkey]['key'] = $catkey;
 
@@ -159,6 +159,12 @@ function atto_template_sort(& $params) {
     }
 
     usort($categories, "cmp");
+	
+	$alerts = array_shift($categories);
+	$buttons = array_shift($categories);
+	
+	array_push($categories, $alerts, $buttons);
+	
     $values = array();
     $values['items'] = $items;
     $values['categories'] = $categories;
