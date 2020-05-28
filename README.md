@@ -1,4 +1,4 @@
-# moodle-atto_templates
+# moodle-atto_template
 
 This is an atto plugin for Moodle which allows the administrator to define a set of predefined templates which a teacher can insert into their course pages.
 

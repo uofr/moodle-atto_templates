@@ -15,27 +15,27 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Atto_templates settings
- * @package   atto_templates
+ * atto_template settings
+ * @package   atto_template
  * @author    Mark Sharp <m.sharp@chi.ac.uk>
  * @copyright 2017 University of Chichester {@link www.chi.ac.uk}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die;
-if (!defined('ATTO_TEMPLATES_TEMPLATE_COUNT')) {
-    define('ATTO_TEMPLATES_TEMPLATE_COUNT', 3);
+if (!defined('atto_template_TEMPLATE_COUNT')) {
+    define('atto_template_TEMPLATE_COUNT', 3);
 }
 
 
 if (is_siteadmin()) {
-    $config = get_config('atto_templates');
-    $ADMIN->add('editoratto', new admin_category('atto_templates', new lang_string('pluginname', 'atto_templates')));
+    $config = get_config('atto_template');
+    $ADMIN->add('editoratto', new admin_category('atto_template', new lang_string('pluginname', 'atto_template')));
 
-    $settings = new admin_settingpage('atto_templates_settings', new lang_string('settings', 'atto_templates'));
-    $settings->add(new admin_setting_configcheckbox('atto_templates/templatesource',
-        get_string('templatesource', 'atto_templates'), 
-        get_string('templatesource_desc', 'atto_templates'),
+    $settings = new admin_settingpage('atto_template_settings', new lang_string('settings', 'atto_template'));
+    $settings->add(new admin_setting_configcheckbox('atto_template/templatesource',
+        get_string('templatesource', 'atto_template'), 
+        get_string('templatesource_desc', 'atto_template'),
         0));
     
 	if (!isset($config->templatesource)) {
@@ -43,10 +43,10 @@ if (is_siteadmin()) {
 	}
 	  
     if ($config && $config->templatesource == 0) {  
-    $settings->add(new admin_setting_configtext('atto_templates/templatecount',
-        get_string('templatecount', 'atto_templates'),
-        get_string('templatecount_desc', 'atto_templates'),
-        ATTO_TEMPLATES_TEMPLATE_COUNT, PARAM_INT, 20));
+    $settings->add(new admin_setting_configtext('atto_template/templatecount',
+        get_string('templatecount', 'atto_template'),
+        get_string('templatecount_desc', 'atto_template'),
+        atto_template_TEMPLATE_COUNT, PARAM_INT, 20));
     }
 
     if ($config && property_exists($config, 'templatecount') && $config->templatesource == 1) {
@@ -56,7 +56,7 @@ if (is_siteadmin()) {
         $templatecount = $config->templatecount;
     }
     else {
-        $templatecount = ATTO_TEMPLATES_TEMPLATE_COUNT;
+        $templatecount = atto_template_TEMPLATE_COUNT;
     }
 
     if ($templatecount > 0) {
@@ -70,19 +70,19 @@ if (is_siteadmin()) {
             $tname = $i;
         }
 
-        $settings->add(new admin_setting_heading('atto_templates/templatepageheading_' . $i,
-                get_string('templateheading', 'atto_templates', $tname), ''));
+        $settings->add(new admin_setting_heading('atto_template/templatepageheading_' . $i,
+                get_string('templateheading', 'atto_template', $tname), ''));
 
         // Template key.
-        $settings->add(new admin_setting_configtext('atto_templates/templatekey_' . $i ,
-            get_string('templatekey', 'atto_templates', $i),
-            get_string('templatekey_desc', 'atto_templates'),
+        $settings->add(new admin_setting_configtext('atto_template/templatekey_' . $i ,
+            get_string('templatekey', 'atto_template', $i),
+            get_string('templatekey_desc', 'atto_template'),
             '', PARAM_ALPHANUMEXT));
 
         // Template body.
-        $settings->add(new admin_setting_configtextarea('atto_templates/template_' . $i,
-            get_string('template', 'atto_templates', $i),
-            get_string('template_desc', 'atto_templates'), ''));
+        $settings->add(new admin_setting_configtextarea('atto_template/template_' . $i,
+            get_string('template', 'atto_template', $i),
+            get_string('template_desc', 'atto_template'), ''));
         }
     } 
 }

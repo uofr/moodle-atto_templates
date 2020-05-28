@@ -16,7 +16,7 @@
 
 /**
  * Templates Lib.
- * @package   atto_templates
+ * @package   atto_template
  * @author    Mark Sharp <m.sharp@chi.ac.uk>
  * @copyright 2017 University of Chichester {@link www.chi.ac.uk}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -27,7 +27,7 @@ defined('MOODLE_INTERNAL') || die;
 /**
  * Set language strings for js
  */
-function atto_templates_strings_for_js() {
+function atto_template_strings_for_js() {
     global $PAGE;
     $PAGE->requires->strings_for_js(
         ['dialogtitle',
@@ -38,7 +38,7 @@ function atto_templates_strings_for_js() {
          'cancel',
          'preview',
          'selectacategory',
-     ], 'atto_templates');
+     ], 'atto_template');
 }
 
 /**
@@ -48,13 +48,13 @@ function atto_templates_strings_for_js() {
  * @param stdClass $fpoptions - unused
  * @return array List of templates
  */
-function atto_templates_params_for_js($elementid, $options, $fpoptions) {
+function atto_template_params_for_js($elementid, $options, $fpoptions) {
     global $CFG;
-    $templates = get_config('atto_templates');
+    $templates = get_config('atto_template');
     $tsource = $templates->templatesource;
 
     if ($tsource == 0) {
-    $tcount = ($templates->templatecount) ? $templates->templatecount : ATTO_TEMPLATES_TEMPLATE_COUNT;
+    $tcount = ($templates->templatecount) ? $templates->templatecount : atto_template_TEMPLATE_COUNT;
     $items = [];
     for ($i = 1; $i <= $tcount; $i++) {
         $key = 'templatekey_' . $i;
@@ -102,10 +102,10 @@ function atto_templates_params_for_js($elementid, $options, $fpoptions) {
 /**
  * Get icon mapping for font-awesome.
  */
-function atto_templates_get_fontawesome_icon_map() {
+function atto_template_get_fontawesome_icon_map() {
     return [
-        'atto_templates:icon' => 'fa-wpforms',
-        'atto_templates:test' => 'fa-dragon'
+        'atto_template:icon' => 'fa-wpforms',
+        'atto_template:test' => 'fa-dragon'
     ];
 }
 

@@ -16,7 +16,7 @@
 
 /**
  * Templates version file.
- * @package   atto_templates
+ * @package   atto_template
  * @author    Mark Sharp <m.sharp@chi.ac.uk>
  * @copyright 2017 University of Chichester {@link www.chi.ac.uk}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -24,8 +24,8 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->component = 'atto_templates';
-$plugin->version = 2018041301;
+$plugin->component = 'atto_template';
+$plugin->version = 2018041302;
 $plugin->release = '3.4.2';
 $plugin->requires = 2017111302;
 $plugin->maturity = MATURITY_STABLE;

@@ -1,5 +1,3 @@
-YUI.add('moodle-atto_templates-button', function (Y, NAME) {
-
     // This file is part of Moodle - http://moodle.org/
     //
     // Moodle is free software: you can redistribute it and/or modify
@@ -18,19 +16,19 @@ YUI.add('moodle-atto_templates-button', function (Y, NAME) {
     
     /**
      * Atto Templates - YUI file
-     * @package   atto_templates
+     * @package   atto_template
      * @author    Mark Sharp <m.sharp@chi.ac.uk>
      * @copyright 2017 University of Chichester {@link www.chi.ac.uk}
      * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
      */
     
-     var COMPONENTNAME = 'atto_templates',
+     var COMPONENTNAME = 'atto_template',
         CSS = {
-            TEMPLATENAME: 'atto_templates_name',
-            PREVIEW: 'atto_templates_preview',
-            INSERT: 'atto_templates_insert',
-            CANCEL: 'atto_templates_cancel',
-            DESCRIPTION: 'atto_templates_description',
+            TEMPLATENAME: 'atto_template_name',
+            PREVIEW: 'atto_template_preview',
+            INSERT: 'atto_template_insert',
+            CANCEL: 'atto_template_cancel',
+            DESCRIPTION: 'atto_template_description',
             LIST: 'templatelist',
             TYPE: 'templatetype'
         },
@@ -65,7 +63,7 @@ YUI.add('moodle-atto_templates-button', function (Y, NAME) {
                 '</form>'
         };
     
-    Y.namespace('M.atto_templates').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
+    Y.namespace('M.atto_template').Button = Y.Base.create('button', Y.M.editor_atto.EditorPlugin, [], {
         _content: null,
         _templates: [],
         _categories: [],
@@ -331,7 +329,3 @@ YUI.add('moodle-atto_templates-button', function (Y, NAME) {
             }
         }
     });
-    
-    
-    }, '@VERSION@', {"requires": ["moodle-editor_atto-plugin"]});
-    

@@ -16,7 +16,7 @@
 
 /**
  * English lang strings
- * @package   atto_templates
+ * @package   atto_template
  * @author    Mark Sharp <m.sharp@chi.ac.uk>
  * @copyright 2017 University of Chichester {@link www.chi.ac.uk}
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
@@ -46,7 +46,7 @@ $string['templatekey_desc'] = 'The key should be one word and only contain numbe
 $string['templatestyle'] = 'Custom CSS (template {$a})';
 $string['templatestyle_desc'] = 'Enter any custom CSS that your template uses here. Template variables will not work here. Just plain old css.';
 
-$string['privacy:metadata'] = 'The atto_templates plugin does not store any personal data.';
+$string['privacy:metadata'] = 'The atto_template plugin does not store any personal data.';
 
 $string['templatesource'] = 'Template Source';
 $string['templatesource_desc'] = 'Click to use the same templates as the tinyMCE editor.';
